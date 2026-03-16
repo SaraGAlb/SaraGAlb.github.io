@@ -1,0 +1,335 @@
+/* ==== VARIABLES Y RESE T==== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+:root {
+    --color-bg:        #f7f4f0;
+    --color-dark:      #1a1a1a;
+    --color-accent:    #c9b99a;
+    --color-accent-dk: #a89070;
+    --color-white:     #ffffff;
+    --color-muted:     #888888;
+    --color-border:    #e8e2da;
+    --color-surface:   #ffffff;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Lato', sans-serif;
+
+    --radius-sm: 2px;
+    --radius-md: 4px;
+
+    --transition: 0.25s ease;
+    --shadow-card: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    background-color: var(--color-bg);
+    color: var(--color-dark);
+    min-height: 100vh;
+}
+
+/* ==== TIPOGRAFÍA ==== */
+h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+h3 { font-size: 1.15rem; }
+
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+em { font-style: italic; color: var(--color-accent); }
+
+/* === HEADER === */
+header {
+    background-color: var(--color-dark);
+    padding: 1.2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-white);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+}
+
+/*==== NAVEGACIÓN ==== */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--transition);
+    position: relative;
+    padding-bottom: 2px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transition: width var(--transition);
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--color-white);
+}
+
+nav a:hover::after,
+nav a.active::after {
+    width: 100%;
+}
+
+/* Botón menú móvil */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* ==== HERO ==== */
+.hero {
+    background-color: var(--color-dark);
+    padding: 5rem 2.5rem 6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decoración geométrica de fondo */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(201, 185, 154, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Curva de transición al body */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: var(--color-bg);
+    clip-path: ellipse(55% 100% at 50% 100%);
+    pointer-events: none;
+}
+
+.hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.2rem;
+}
+
+.hero h1 {
+    color: var(--color-white);
+    max-width: 560px;
+    margin-bottom: 1.2rem;
+}
+
+.hero-sub {
+    color: #888;
+    font-size: 1rem;
+    max-width: 400px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+    padding: 0.7rem 1.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.hero-cta:hover {
+    background-color: var(--color-accent-dk);
+    transform: translateY(-1px);
+}
+
+/* ==== MAIN / SECCIONES ==== */
+main {
+    padding: 3rem 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 3.5rem;
+}
+
+/* Etiqueta de sección */
+.section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--color-border);
+}
+
+/* ==== ANIMACIONES DE ENTRADA ==== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main > section {
+    animation: fadeUp 0.7s ease forwards;
+}
+
+main > section:nth-child(2) { animation-delay: 0.1s; }
+main > section:nth-child(3) { animation-delay: 0.2s; }
+main > section:nth-child(4) { animation-delay: 0.3s; }
+
+/* ==== FOOTER ==== */
+footer {
+    background-color: var(--color-dark);
+    color: #555;
+    padding: 1.8rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+footer a {
+    color: #555;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+footer a:hover {
+    color: var(--color-white);
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* === RESPONSIVE ==== */
+@media (max-width: 640px) {
+    header {
+        padding: 1rem 1.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+    }
+
+    nav ul.open {
+        max-height: 300px;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    nav a::after { display: none; }
+
+    .hero {
+        padding: 3.5rem 1.5rem 5rem;
+    }
+
+    main {
+        padding: 2rem 1.5rem;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+}

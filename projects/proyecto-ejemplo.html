@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto de Ejemplo - Portfolio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="site-logo">Tu Nombre</a>
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../about.html">Sobre mí</a></li>
+                <li><a href="index.html" class="active">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section>
+            <div class="section-label">Proyecto</div>
+
+            <div class="project-detail">
+
+                <!-- Cabecera del proyecto -->
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+                    <div>
+                        <h2>Nombre del Proyecto</h2>
+                        <p class="text-muted" style="font-size:0.85rem; margin-bottom:0;">
+                            Año · Tecnología principal
+                        </p>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <!-- Imagen / demo placeholder -->
+                <div style="
+                    height: 200px;
+                    background-color: var(--color-dark);
+                    border-radius: var(--radius-sm);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--color-accent);
+                    font-family: var(--font-display);
+                    font-size: 1.1rem;
+                    margin-bottom: 1.5rem;
+                ">
+                    Captura de pantalla / Demo
+                </div>
+
+                <!-- Descripción -->
+                <h3 style="margin-bottom:0.6rem;">Descripción</h3>
+                <p>
+                    Detalle sobre este proyecto: qué hace, para qué sirve y qué problema resuelve.
+                    Cuánto más concreto seas, mejor impresión dará a quien lo lea.
+                </p>
+
+                <!-- Retos -->
+                <h3 style="margin-top:1.5rem; margin-bottom:0.6rem;">Retos y aprendizajes</h3>
+                <p>
+                    Explica aquí qué fue lo más difícil de implementar y cómo lo resolviste.
+                    Esto muestra tu capacidad de análisis y resolución de problemas.
+                </p>
+
+                <!-- Enlace -->
+                <div style="margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                    <a href="#" class="button button--primary">Ver en GitHub</a>
+                    <a href="index.html" class="button button--outline">&larr; Volver a proyectos</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Tu Nombre</p>
+        <nav class="footer-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="../about.html">Contacto</a>
+        </nav>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

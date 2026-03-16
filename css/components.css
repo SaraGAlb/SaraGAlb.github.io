@@ -1,0 +1,214 @@
+/* ============================================
+   COMPONENTS.CSS — Patrones reutilizables
+   ============================================ */
+
+/* ============================================
+   CARDS DE PROYECTO
+   ============================================ */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+}
+
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition), box-shadow var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+}
+
+.card-thumb {
+    height: 140px;
+    background-color: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--color-muted);
+}
+
+/* Variantes de color para las cards */
+.card-thumb--dark  { background-color: var(--color-dark); color: var(--color-accent); }
+.card-thumb--warm  { background-color: #e8e2da; color: #888; }
+.card-thumb--tone  { background-color: var(--color-accent); color: var(--color-dark); }
+
+.card-body {
+    padding: 1.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.card-body h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: var(--font-display);
+    margin-bottom: 0.2rem;
+}
+
+.card-body p {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    margin-bottom: 0;
+    flex: 1;
+}
+
+/* ==== ETIQUETAS (TAGS) ==== */
+.tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: var(--color-bg);
+    color: var(--color-accent-dk);
+    border: 1px solid var(--color-border);
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    margin-top: auto;
+    width: fit-content;
+}
+
+/* ==== BOTONES ==== */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.65rem 1.4rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.button--primary {
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+}
+
+.button--primary:hover {
+    background-color: var(--color-accent-dk);
+    transform: translateY(-1px);
+}
+
+.button--outline {
+    background-color: transparent;
+    color: var(--color-dark);
+    border: 1.5px solid var(--color-dark);
+}
+
+.button--outline:hover {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+}
+
+/* ==== SKILLS / HABILIDADES ==== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.7rem;
+}
+
+.skill-item {
+    background: var(--color-white);
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.skill-item:hover {
+    border-color: var(--color-accent-dk);
+    transform: translateX(2px);
+}
+
+/* ==== CARD DE PROYECTO INDIVIDUAL ==== */
+.project-detail {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+}
+
+.project-detail h2 {
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+
+.project-detail p {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* ==== PERFIL (about page) ==== */
+.bio-block {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.bio-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+.bio-text h2 {
+    margin-bottom: 0.5rem;
+}
+
+.bio-text p {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+    .bio-block {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==== UTILIDADES ==== */
+.text-center { text-align: center; }
+.text-muted   { color: var(--color-muted); }
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mt-2 { margin-top: 2rem; }

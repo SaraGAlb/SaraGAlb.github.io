@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="site-logo">Sara García Albandea</a>
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="about.html">Sobre mí</a></li>
+                <li><a href="projects/index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <p class="hero-eyebrow">Desarrollador de Aplicaciones Multiplataforma</p>
+        <h1>Construyendo software<br><em>con propósito</em></h1>
+        <p class="hero-sub">
+            Bienvenido a mi portfolio. Aquí encontrarás proyectos que demuestran
+            mis habilidades en desarrollo web y aplicaciones.
+        </p>
+        <a href="projects/index.html" class="hero-cta">Ver proyectos &rarr;</a>
+    </section>
+
+    <main>
+
+        <!-- PROYECTOS DESTACADOS -->
+        <section id="proyectos">
+            <div class="section-label">Proyectos destacados</div>
+            <div class="projects-grid">
+
+                <article class="card">
+                    <div class="card-thumb card-thumb--warm">◻</div>
+                    <div class="card-body">
+                        <h3>Proyecto Alpha</h3>
+                        <p>Descripción breve del proyecto y tecnologías usadas.</p>
+                        <span class="tag">HTML · CSS</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-thumb card-thumb--dark">◈</div>
+                    <div class="card-body">
+                        <h3>Proyecto Beta</h3>
+                        <p>Descripción breve del proyecto y tecnologías usadas.</p>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-thumb card-thumb--tone">◇</div>
+                    <div class="card-body">
+                        <h3>Proyecto Gamma</h3>
+                        <p>Descripción breve del proyecto y tecnologías usadas.</p>
+                        <span class="tag">Java · SQL</span>
+                    </div>
+                </article>
+
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <a href="projects/index.html" class="button button--outline">Ver todos los proyectos</a>
+            </div>
+        </section>
+
+        <!-- HABILIDADES -->
+        <section id="habilidades">
+            <div class="section-label">Habilidades</div>
+            <div class="skills-grid">
+                <div class="skill-item">HTML5</div>
+                <div class="skill-item">CSS3</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">Java</div>
+                <div class="skill-item">SQL</div>
+                <div class="skill-item">Git</div>
+                <!-- añade más según tu temario -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Tu Nombre</p>
+        <nav class="footer-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+            <a href="about.html">Contacto</a>
+        </nav>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
