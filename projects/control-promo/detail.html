@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto de Ejemplo - Portfolio</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/components.css">
+    <title>Control Promo - Portfolio</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
 </head>
 <body>
 
     <header>
-        <a href="../index.html" class="site-logo">Tu Nombre</a>
+        <a href="../../index.html" class="site-logo">Sara García Albandea</a>
         <button class="menu-toggle" aria-label="Toggle menu">☰</button>
         <nav>
             <ul>
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../about.html">Sobre mí</a></li>
-                <li><a href="index.html" class="active">Proyectos</a></li>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../about.html">Sobre mí</a></li>
+                <li><a href="../index.html">Proyectos</a></li>
             </ul>
         </nav>
     </header>
@@ -31,10 +31,7 @@
                 <!-- Cabecera del proyecto -->
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
                     <div>
-                        <h2>Nombre del Proyecto</h2>
-                        <p class="text-muted" style="font-size:0.85rem; margin-bottom:0;">
-                            Año · Tecnología principal
-                        </p>
+                        <h2>Control Promo Mensual</h2>
                     </div>
                     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                         <span class="tag">HTML</span>
@@ -56,27 +53,37 @@
                     font-size: 1.1rem;
                     margin-bottom: 1.5rem;
                 ">
-                    Captura de pantalla / Demo
+                    <img src="../../images/DemoPromo.png" alt="Demo Control Promo" style="
+                        width: 100%;
+                        height: 100%;
+                    ">
                 </div>
 
                 <!-- Descripción -->
                 <h3 style="margin-bottom:0.6rem;">Descripción</h3>
                 <p>
-                    Detalle sobre este proyecto: qué hace, para qué sirve y qué problema resuelve.
-                    Cuánto más concreto seas, mejor impresión dará a quien lo lea.
+                    Herramienta web para gestionar el reparto diario de propinas entre empleados.
+                    Permite registrar la cantidad total del día, seleccionar qué empleados trabajaron
+                    y cuántas horas, calculando automáticamente la parte proporcional que corresponde
+                    a cada uno. Los datos persisten entre sesiones mediante localStorage y pueden
+                    exportarse en PDF o Excel al cierre del ciclo mensual (del 21 al 20).
                 </p>
 
                 <!-- Retos -->
                 <h3 style="margin-top:1.5rem; margin-bottom:0.6rem;">Retos y aprendizajes</h3>
                 <p>
-                    Explica aquí qué fue lo más difícil de implementar y cómo lo resolviste.
-                    Esto muestra tu capacidad de análisis y resolución de problemas.
+                    El principal reto fue diseñar una lógica de reparto proporcional por horas
+                    que fuera robusta ante distintas combinaciones de empleados y jornadas.
+                    También implementé validaciones para evitar duplicar registros de un mismo día,
+                    con la opción de cargar y editar datos ya guardados. Para las exportaciones
+                    integré las librerías jsPDF y SheetJS, generando documentos con formato
+                    profesional listos para entregar.
                 </p>
 
                 <!-- Enlace -->
                 <div style="margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
-                    <a href="#" class="button button--primary">Ver en GitHub</a>
-                    <a href="index.html" class="button button--outline">&larr; Volver a proyectos</a>
+                    <a href="index.html" class="button button--outline">Ver demo →</a>
+                    <a href="../index.html" class="button button--outline">&larr; Volver a proyectos</a>
                 </div>
 
             </div>
@@ -87,12 +94,12 @@
     <footer>
         <p>&copy; 2026 Sara García Albandea</p>
         <nav class="footer-links">
-            <a href="#">GitHub</a>
+            <a href="https://github.com/saragalb">GitHub</a>
             <a href="#">LinkedIn</a>
-            <a href="../about.html">Contacto</a>
+            <a href="../../about.html">Contacto</a>
         </nav>
     </footer>
 
-    <script src="../js/main.js"></script>
+    <script src="../../js/main.js"></script>
 </body>
 </html>

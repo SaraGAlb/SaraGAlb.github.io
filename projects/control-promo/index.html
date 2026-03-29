@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Promo</title>
+
+<!--
+Herramienta desarrollada por: Sara García Albandea
+Fecha: 14/02/26
+Calculadora de promoción mensual
+-->
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #18181f;
+  --surface2: #22222c;
+  --border: #2e2e3d;
+  --accent: #c8f060;
+  --accent2: #60c8f0;
+  --danger: #f06060;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 32px 16px;
+}
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: auto;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+
+.header-left .label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.header-left h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.header-left h1 span {
+  color: var(--text);
+}
+
+.mes-badge {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.mes-badge strong {
+  color: var(--accent2);
+  font-size: 20px;
+  font-weight: 500;
+  display: block;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.mes-badge .dias-count {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  letter-spacing: 0.08em;
+}
+
+/* DIA YA EXISTE WARNING */
+.dia-warning {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(240, 180, 60, 0.1);
+  border: 1px solid rgba(240, 180, 60, 0.4);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #f0b43c;
+}
+
+.dia-warning.visible { display: flex; }
+
+.dia-warning button {
+  margin-left: auto;
+  padding: 4px 10px;
+  font-size: 11px;
+  background: rgba(240, 180, 60, 0.2);
+  color: #f0b43c;
+  border: 1px solid rgba(240, 180, 60, 0.4);
+  border-radius: 6px;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+  display: block;
+}
+
+/* INPUTS ROW */
+.inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field input[type=number] {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 14px;
+  width: 100%;
+  transition: border-color 0.2s;
+  -moz-appearance: textfield;
+}
+
+.field input[type=number]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.field input[type=number]::-webkit-inner-spin-button,
+.field input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* EMPLOYEES */
+.emp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emp-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+
+.emp-row.active {
+  border-color: var(--accent);
+  background: rgba(200, 240, 96, 0.05);
+}
+
+.emp-check {
+  display: none;
+}
+
+.emp-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.emp-row.active .emp-indicator {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.emp-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.emp-horas-label {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.emp-horas-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  padding: 4px 8px;
+  width: 56px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.emp-horas-input::-webkit-inner-spin-button,
+.emp-horas-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.emp-horas-input:focus {
+  outline: none;
+  border-color: var(--accent2);
+}
+
+/* ACTIONS */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+button {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+button:hover { opacity: 0.85; }
+button:active { transform: scale(0.97); }
+
+.btn-save { background: var(--accent); color: #0f0f13; }
+.btn-del { background: var(--surface2); color: var(--danger); border: 1px solid var(--danger); }
+.btn-view { background: var(--surface2); color: var(--accent2); border: 1px solid var(--accent2); }
+.btn-reset { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+/* EXPORT BUTTONS */
+.export-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.btn-pdf  { background: #f06060; color: white; }
+.btn-xlsx { background: #27ae60; color: white; }
+
+/* DIAS LIST */
+.dias-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dia-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.dia-item .dia-num {
+  font-weight: 500;
+  color: var(--accent2);
+  min-width: 50px;
+}
+
+.dia-item .dia-total {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* TOTALES */
+.totales-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+.total-row .t-nombre {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.total-row .t-valor {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+.total-mes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  background: rgba(200, 240, 96, 0.08);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.total-mes span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+.total-mes strong { font-size: 24px; color: var(--accent); letter-spacing: -1px; }
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--accent);
+  color: #0f0f13;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 50px;
+  z-index: 999;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { background: var(--danger); color: white; }
+
+@media (max-width: 500px) {
+  .actions { grid-template-columns: 1fr 1fr; }
+  .inputs-row { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="label">Control de reparto</div>
+      <h1>GESTOR<span>PROPINAS</span></h1>
+    </div>
+    <div class="mes-badge">
+      Ciclo activo<strong id="cicloLabel">—</strong>
+      <span class="dias-count" id="diasCount">0 días</span>
+    </div>
+  </div>
+
+  <!-- INPUT CARD -->
+  <div class="card">
+    <div class="card-title">Datos del día</div>
+    <div class="inputs-row">
+      <div class="field">
+        <label>Día (ciclo 1→31)</label>
+        <input type="number" id="dia" min="1" max="31" placeholder="Ej: 15" oninput="onDiaChange()">
+      </div>
+      <div class="field">
+        <label>Total promo (€)</label>
+        <input type="number" id="promo" placeholder="0.00">
+      </div>
+    </div>
+    <div class="dia-warning" id="diaWarning">
+      ⚠️ Este día ya está guardado. Se sobreescribirá al guardar.
+      <button onclick="cargarDiaExistente()">Cargar datos</button>
+    </div>
+  </div>
+
+  <!-- EMPLEADOS CARD -->
+  <div class="card">
+    <div class="card-title">Empleados hoy</div>
+    <div class="emp-list" id="empleados"></div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn-save" onclick="guardarDia()">Guardar</button>
+    <button class="btn-del"  onclick="borrarDia()">Borrar día</button>
+    <button class="btn-view" onclick="verTotales()">Ver totales</button>
+    <button class="btn-reset" onclick="borrarMes()">Reset mes</button>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="export-row">
+    <button class="btn-pdf"  onclick="exportarPDF()">↓ Exportar PDF</button>
+    <button class="btn-xlsx" onclick="exportarExcel()">↓ Exportar Excel</button>
+  </div>
+
+  <!-- DIAS REGISTRADOS -->
+  <div class="card">
+    <div class="card-title">Días registrados</div>
+    <div id="listaDias"><p class="empty-state">Sin datos aún</p></div>
+  </div>
+
+  <!-- TOTALES -->
+  <div class="card">
+    <div class="card-title">Total por empleado</div>
+    <div id="totales"><p class="empty-state">Pulsa "Ver totales"</p></div>
+  </div>
+
+  <div class="footer">Desarrollado por Sara García Albandea · 2026</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== EMPLEADOS =====
+let empleados = [
+  {nombre:"Empleado 1", horas:6},
+  {nombre:"Empleado 2", horas:6},
+  {nombre:"Empleado 3", horas:6},
+  {nombre:"Empleado 4", horas:6},
+  {nombre:"Empleado 5", horas:6}
+];
+
+let registros = JSON.parse(localStorage.getItem("registros")) || {};
+
+// ===== TOAST =====
+function toast(msg, isError=false) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast" + (isError ? " error" : "");
+  setTimeout(()=> t.classList.add("show"), 10);
+  setTimeout(()=> t.classList.remove("show"), 2800);
+}
+
+// ===== CICLO LABEL + CONTADOR =====
+function actualizarCicloLabel() {
+  const dias = Object.keys(registros).map(Number).sort((a,b)=>a-b);
+  const count = dias.length;
+  document.getElementById("diasCount").textContent = count === 0 ? "0 días" : count + (count===1?" día":" días");
+  if (!dias.length) { document.getElementById("cicloLabel").textContent = "—"; return; }
+  const min = dias[0], max = dias[dias.length-1];
+  document.getElementById("cicloLabel").textContent = `${min} → ${max}`;
+}
+
+// ===== DÍA INPUT CHANGE → avisar si existe =====
+function onDiaChange() {
+  const dia = document.getElementById("dia").value;
+  const w   = document.getElementById("diaWarning");
+  w.classList.toggle("visible", !!(dia && registros[dia]));
+}
+
+// ===== CARGAR DÍA EXISTENTE =====
+function cargarDiaExistente() {
+  const dia = document.getElementById("dia").value;
+  if (!registros[dia]) return;
+  document.getElementById("promo").value = registros[dia].total;
+  seleccionados.clear();
+  empleados.forEach((e, i) => {
+    const row   = document.getElementById("row"+i);
+    const enReg = registros[dia].empleados[e.nombre] !== undefined;
+    row.classList.toggle("active", enReg);
+    if (enReg) seleccionados.add(i);
+  });
+  toast("Datos del día " + dia + " cargados");
+}
+
+// ===== EMPLEADOS UI =====
+function cargarEmpleados() {
+  const div = document.getElementById("empleados");
+  div.innerHTML = "";
+  empleados.forEach((e, i) => {
+    const row = document.createElement("div");
+    row.className = "emp-row";
+    row.id = "row" + i;
+    row.innerHTML = `
+      <div class="emp-indicator" id="ind${i}"></div>
+      <span class="emp-name">${e.nombre}</span>
+      <span class="emp-horas-label">h</span>
+      <input class="emp-horas-input" type="number" id="horas${i}" value="${e.horas}" min="0" onclick="event.stopPropagation()">
+    `;
+    row.addEventListener("click", ()=> toggleEmp(i));
+    div.appendChild(row);
+  });
+}
+
+let seleccionados = new Set();
+
+function toggleEmp(i) {
+  if (seleccionados.has(i)) {
+    seleccionados.delete(i);
+    document.getElementById("row"+i).classList.remove("active");
+  } else {
+    seleccionados.add(i);
+    document.getElementById("row"+i).classList.add("active");
+  }
+}
+
+function obtenerEmpleadosHoy() {
+  return [...seleccionados].map(i => ({
+    nombre: empleados[i].nombre,
+    horas: parseFloat(document.getElementById("horas"+i).value) || 0
+  }));
+}
+
+// ===== GUARDAR =====
+function guardarDia() {
+  const dia   = document.getElementById("dia").value;
+  const promo = parseFloat(document.getElementById("promo").value);
+  if (!dia || !promo) { toast("Introduce día y promo", true); return; }
+
+  const hoy = obtenerEmpleadosHoy();
+  if (!hoy.length) { toast("Marca al menos un empleado", true); return; }
+
+  const totalHoras = hoy.reduce((s,e)=>s+e.horas, 0);
+  const valorHora  = promo / totalHoras;
+  const reparto    = {};
+  hoy.forEach(e => reparto[e.nombre] = valorHora * e.horas);
+
+  const esSobreescritura = !!registros[dia];
+  registros[dia] = { total: promo, empleados: reparto };
+  localStorage.setItem("registros", JSON.stringify(registros));
+
+  mostrarListaDias();
+  verTotales();
+  actualizarCicloLabel();
+  onDiaChange();
+  toast(esSobreescritura ? "✓ Día " + dia + " actualizado" : "✓ Día " + dia + " guardado");
+}
+
+// ===== BORRAR DÍA =====
+function borrarDia() {
+  const dia = document.getElementById("dia").value;
+  if (registros[dia]) {
+    delete registros[dia];
+    localStorage.setItem("registros", JSON.stringify(registros));
+    mostrarListaDias();
+    verTotales();
+    actualizarCicloLabel();
+    onDiaChange();
+    toast("Día " + dia + " eliminado");
+  } else {
+    toast("Ese día no existe", true);
+  }
+}
+
+// ===== BORRAR MES =====
+function borrarMes() {
+  if (!confirm("⚠️ Eliminar TODO el mes. ¿Seguro?")) return;
+  if (!confirm("Esta acción NO se puede deshacer")) return;
+  registros = {};
+  localStorage.removeItem("registros");
+  mostrarListaDias();
+  verTotales();
+  actualizarCicloLabel();
+  onDiaChange();
+  toast("Mes reiniciado");
+}
+
+// ===== MOSTRAR DÍAS =====
+function mostrarListaDias() {
+  const div  = document.getElementById("listaDias");
+  const dias = Object.keys(registros).sort((a,b)=>a-b);
+  if (!dias.length) { div.innerHTML = '<p class="empty-state">Sin días registrados</p>'; return; }
+
+  div.innerHTML = '<div class="dias-list">' +
+    dias.map(d => `
+      <div class="dia-item">
+        <span class="dia-num">Día ${d}</span>
+        <span>${Object.keys(registros[d].empleados).join(", ")}</span>
+        <span class="dia-total">${registros[d].total.toFixed(2)} €</span>
+      </div>`).join("") +
+    '</div>';
+}
+
+// ===== TOTALES =====
+function calcularAcumulado() {
+  const ac = {};
+  for (let d in registros)
+    for (let n in registros[d].empleados)
+      ac[n] = (ac[n]||0) + registros[d].empleados[n];
+  return ac;
+}
+
+function verTotales() {
+  const ac  = calcularAcumulado();
+  const div = document.getElementById("totales");
+  const names = Object.keys(ac);
+  if (!names.length) { div.innerHTML = '<p class="empty-state">Sin datos aún</p>'; return; }
+
+  const totalMes = Object.values(ac).reduce((s,v)=>s+v, 0);
+
+  div.innerHTML = `
+    <div class="totales-grid">
+      ${names.map(n=>`
+        <div class="total-row">
+          <span class="t-nombre">${n}</span>
+          <span class="t-valor">${ac[n].toFixed(2)} €</span>
+        </div>`).join("")}
+      <div class="total-mes">
+        <span>Total mes</span>
+        <strong>${totalMes.toFixed(2)} €</strong>
+      </div>
+    </div>`;
+}
+
+// ===== EXPORTAR PDF =====
+async function exportarPDF() {
+  const dias = Object.keys(registros).sort((a,b)=>a-b);
+  if (!dias.length) { toast("No hay datos para exportar", true); return; }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:"pt", format:"a4" });
+
+  const margin = 40;
+  const pageW  = doc.internal.pageSize.getWidth();
+  let y = 50;
+
+  // Title
+  doc.setFillColor(200, 240, 96);
+  doc.rect(0, 0, pageW, 38, "F");
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(18);
+  doc.setTextColor(15, 15, 19);
+  doc.text("CONTROL PROMO MENSUAL", margin, 26);
+
+  const ahora = new Date();
+  doc.setFontSize(9);
+  doc.setTextColor(80,80,80);
+  doc.text(`Generado: ${ahora.toLocaleDateString("es-ES")} ${ahora.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}`, pageW - margin, 26, {align:"right"});
+
+  y = 65;
+
+  // Days table header
+  const cols = ["Día", "Total €", ...empleados.map(e=>e.nombre)];
+  const colW = (pageW - margin*2) / cols.length;
+
+  doc.setFillColor(34, 34, 44);
+  doc.rect(margin, y-14, pageW-margin*2, 20, "F");
+  doc.setTextColor(200,240,96);
+  doc.setFontSize(9);
+  doc.setFont("helvetica","bold");
+  cols.forEach((c,i) => doc.text(c, margin + colW*i + 4, y));
+  y += 14;
+
+  // Rows
+  dias.forEach((d, idx) => {
+    if (y > 750) { doc.addPage(); y = 50; }
+    doc.setFillColor(idx%2===0 ? 24:28, idx%2===0 ? 24:28, idx%2===0 ? 31:36);
+    doc.rect(margin, y-12, pageW-margin*2, 18, "F");
+    doc.setTextColor(220,220,232);
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(8.5);
+    doc.text(String(d), margin+4, y);
+    doc.text(registros[d].total.toFixed(2)+"€", margin+colW+4, y);
+    empleados.forEach((e,i)=>{
+      const val = registros[d].empleados[e.nombre];
+      doc.text(val ? val.toFixed(2)+"€" : "—", margin+colW*(i+2)+4, y);
+    });
+    y += 18;
+  });
+
+  // Totals
+  y += 12;
+  const ac = calcularAcumulado();
+  doc.setFillColor(200,240,96);
+  doc.rect(margin, y-14, pageW-margin*2, 20, "F");
+  doc.setTextColor(15,15,19);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(9);
+  doc.text("TOTAL MES", margin+4, y);
+  const totalMes = Object.values(ac).reduce((s,v)=>s+v,0);
+  doc.text(totalMes.toFixed(2)+"€", margin+colW+4, y);
+  empleados.forEach((e,i)=>{
+    doc.text(ac[e.nombre]?ac[e.nombre].toFixed(2)+"€":"—", margin+colW*(i+2)+4, y);
+  });
+
+  // Footer
+  doc.setTextColor(120,120,140);
+  doc.setFontSize(8);
+  doc.setFont("helvetica","normal");
+  doc.text("Sara García Albandea · Control Promo 2026", pageW/2, doc.internal.pageSize.getHeight()-20, {align:"center"});
+
+  doc.save("promo_mensual.pdf");
+  toast("PDF exportado ✓");
+}
+
+// ===== EXPORTAR EXCEL =====
+function exportarExcel() {
+  const dias = Object.keys(registros).sort((a,b)=>a-b);
+  if (!dias.length) { toast("No hay datos para exportar", true); return; }
+
+  const wb   = XLSX.utils.book_new();
+  const ac   = calcularAcumulado();
+  const empNames = empleados.map(e=>e.nombre);
+
+  // Sheet 1: Detalle diario
+  const header = ["Día", "Total €", ...empNames];
+  const rows   = dias.map(d=>[
+    Number(d),
+    registros[d].total,
+    ...empNames.map(n=> registros[d].empleados[n] || 0)
+  ]);
+  const totalRow = ["TOTAL", Object.values(ac).reduce((s,v)=>s+v,0), ...empNames.map(n=>ac[n]||0)];
+  const wsData   = [header, ...rows, [], totalRow];
+  const ws1 = XLSX.utils.aoa_to_sheet(wsData);
+
+  // Column widths
+  ws1["!cols"] = [8,12,...empNames.map(()=>14)].map(w=>({wch:w}));
+
+  // Style header row (basic)
+  XLSX.utils.book_append_sheet(wb, ws1, "Detalle diario");
+
+  // Sheet 2: Resumen empleados
+  const ws2Data = [
+    ["Empleado", "Total mes €"],
+    ...empNames.map(n=>[n, ac[n]||0]),
+    [],
+    ["TOTAL", Object.values(ac).reduce((s,v)=>s+v,0)]
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(ws2Data);
+  ws2["!cols"] = [{wch:20},{wch:14}];
+  XLSX.utils.book_append_sheet(wb, ws2, "Resumen empleados");
+
+  XLSX.writeFile(wb, "promo_mensual.xlsx");
+  toast("Excel exportado ✓");
+}
+
+// ===== INIT =====
+window.onload = function() {
+  cargarEmpleados();
+  mostrarListaDias();
+  verTotales();
+  actualizarCicloLabel();
+};
+</script>
+</body>
+</html>

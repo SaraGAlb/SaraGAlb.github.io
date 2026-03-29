@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinesis Sport - Portfolio</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="site-logo">Sara García Albandea</a>
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../about.html">Sobre mí</a></li>
+                <li><a href="../index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section>
+            <div class="section-label">Proyecto</div>
+
+            <div class="project-detail">
+
+                <!-- Cabecera -->
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+                    <div>
+                        <h2>Kinesis Sport</h2>
+                        <p class="text-muted" style="font-size:0.85rem; margin-bottom:0;">
+                            2025 · 1er proyecto · Sin frameworks
+                        </p>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">Responsive</span>
+                    </div>
+                </div>
+
+                <!-- Imagen placeholder -->
+                <div style="
+                    height: 200px;
+                    background-color: var(--color-dark);
+                    border-radius: var(--radius-sm);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--color-accent);
+                    font-family: var(--font-display);
+                    font-size: 1.1rem;
+                    margin-bottom: 1.5rem;
+                ">
+                    <img src="../../images/Demo-Kinesis.png" alt="Demo Kinesis Sport" style="
+                        width: 100%;
+                        height: 100%;
+                    ">
+                    </img>  
+                </div>
+
+                <!-- Descripción -->
+                <h3 style="margin-bottom:0.6rem;">Descripción</h3>
+                <p>
+                    Sitio web completo para un centro de entrenamiento personal ficticio llamado Kinesis Sport.
+                    Desarrollado durante el primer curso como ejercicio práctico de maquetación web,
+                    sin usar frameworks ni librerías de CSS. Incluye varias páginas interconectadas
+                    con diseño responsive y menú hamburguesa funcional.
+                </p>
+
+                <!-- Páginas -->
+                <h3 style="margin-top:1.5rem; margin-bottom:0.6rem;">Páginas y funcionalidades</h3>
+                <p>
+                    El sitio cuenta con página de inicio con hero, servicios y formulario de contacto,
+                    página de entrenamiento con tarjetas de modalidades, página de recuperación con
+                    contenido detallado, sección "Sobre mí" del entrenador, página de contacto con
+                    mapa y datos del local, menú hamburguesa responsive sin JavaScript usando solo CSS,
+                    y footer completo con iconos de redes sociales.
+                </p>
+
+                <!-- Retos -->
+                <h3 style="margin-top:1.5rem; margin-bottom:0.6rem;">Retos y aprendizajes</h3>
+                <p>
+                    Primer contacto con la estructura semántica de HTML5 y el diseño responsive con
+                    media queries. Implementé layouts complejos con Flexbox y aprendí a organizar
+                    un proyecto con múltiples páginas y archivos CSS compartidos. El reto más
+                    interesante fue construir el menú móvil sin JavaScript, usando únicamente
+                    el truco del checkbox en CSS puro.
+                </p>
+
+                <!-- Nota PHP -->
+                <p style="
+                    margin-top: 1.2rem;
+                    padding: 0.8rem 1rem;
+                    border-left: 3px solid var(--color-accent);
+                    font-size: 0.85rem;
+                    color: var(--color-muted);
+                ">
+                    ⚠️ El formulario de contacto usa PHP y no está activo en la demo estática.
+                    Funciona correctamente en un entorno con servidor.
+                </p>
+
+                <!-- Enlaces -->
+                <div style="margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                    <a href="index.html" class="button button--primary">Ver demo →</a>
+                    <a href="https://github.com/SaraGAlb" target="_blank" class="button button--outline">Ver en GitHub</a>
+                    <a href="index.html" class="button button--outline">&larr; Volver a proyectos</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Sara García Albandea</p>
+        <nav class="footer-links">
+            <a href="https://github.com/SaraGAlb">GitHub</a>
+            <a href="https://es.linkedin.com/in/sara-garc%C3%ADa-albandea-650a46100">LinkedIn</a>
+            <a href="../../about.html">Contacto</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

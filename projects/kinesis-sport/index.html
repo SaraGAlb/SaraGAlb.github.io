@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Kinesis Gym</title>
+</head>
+<body>
+    <header>
+        <div class="contenedor">
+            <div id="logo-nombre">
+            <img src="img/KINESIS.png" alt="logo">
+            <h1>Kinesis <span>Sport</span></h1>
+            </div>
+        <input type="checkbox" id="menu-check" class="menu">
+        <label id="menu" for="menu-check">
+            <span id="menu-abrir">&#8803;</span>
+            <span id="menu-cerrar">&#9932;</span>
+            
+        </label>
+        <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="Entrenamiento.html">Entrenamiento</a></li>
+            <li><a href="Recuperacion.html">Recuperación</a></li>
+            <li><a href="SobreMi.html">Sobre mí</a></li>
+            <li><a href="Contacto.html">Contacto</a></li>
+        </ul>
+        </nav>
+    </div>
+    </header>
+
+    <main>
+        <section class="parte1">
+            <p><strong>TRANSFORMA TU CUERPO. <span>TRANSFORMA TU VIDA</span></strong>
+                <br>
+                <br>
+                En Kinesis Sport, no solo te ayudamos a ponerte en forma: te acompañamos a alcanzar tu mejor versión. Nuestro espacio está diseñado para motivarte, inspirarte y desafiarte, sin importar tu nivel.<br><br>
+                🔥 Entrenamientos personalizados<br>
+                💪 Equipamiento de última generación<br>
+                👥 Clases grupales dinámicas<br><br>
+                Únete a nuestra comunidad fitness y empieza hoy el cambio que tanto deseas.
+            </p>
+            <button class="boton"><a href="Contacto.html#contacto">Más info</a></button>
+            <img src="img/FotoInicial.jpg" alt="Sala de entreno">
+        </section>
+            <h2><span>NUESTROS </span>SERVICIOS</h2>
+        <section class="parte2">
+            <div class="entrenamiento-card">
+                <img src="img/entrenamiento_personal.png" alt="Entrenamiento personalizado">
+                <a href="Entrenamiento.html#personalizado"><h3>Entrenamiento personal</h3></a>
+                <br>
+                <p>Entrena con un plan 100% personalizado, adaptado a tus objetivos, condición física y estilo de vida.</p>
+            </div>
+            <div class="entrenamiento-card">
+                <img src="img/entrenamiento-grupal.png" alt="Entrenamiento grupal">
+                <a href="Entrenamiento.html#grupal"><h3>Entrenamiento grupal</h3></a>
+                <br>
+                <p>Nuestras clases grupales combinan diversión y resultados con entrenamientos dinámicos que se adaptan a todos los niveles. ¡Entrena en equipo y supera tus límites!</p>
+            </div>
+            <div class="entrenamiento-card">
+                <img src="img/movilidad.png" alt="Recuperación">
+                <a href="Recuperacion.html"><h3>Sesiones recovery</h3></a>
+                <br>
+                <p>Recupera tu cuerpo y mente con nuestras sesiones enfocadas en movilidad y relajación. Perfectas para prevenir lesiones, reducir el estrés y mejorar tu rendimiento general.</p>
+            </div>
+        </section>
+        <section class="parte3">
+            <h2><span>SOBRE </span>MÍ</h2>
+            <p>Soy David, entrenador personal especializado en transformar objetivos en resultados reales. Mi objetivo es ayudar a las personas a transformar su salud y alcanzar sus metas.
+                Mi enfoque combina disciplina, motivación y un trato cercano, adaptando cada entrenamiento a las necesidades reales de cada persona.
+                Creo que todos tenemos el potencial de cambiar, solo necesitamos el plan correcto y alguien que nos acompañe en el camino.</p>
+                <p>
+                    "No entrenes para verte bien. Entrena para sentirte imparable. — David"
+                </p>
+                <button class="botonSobre"><a href="SobreMi.html">¿Quieres sabes más?</a></button>
+            </section>
+            <section class="formulario-contacto" id="formulario">
+                <h3><span>CONTÁCTANOS</span></h3>
+                <form method="post" action="enviar.php" >
+                    <div class="form-grupo">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="email">Correo electrónico:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-grupo">
+                        <label for="mensaje">Mensaje:</label>
+                        <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="boton-enviar">Enviar mensaje</button>
+                </form>
+            </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3><span>Kinesis</span> Sport</h3>
+                <p>Centro de entrenamiento personalizado para transformar cuerpo y mente. ¡Haz del movimiento tu estilo de vida!</p>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="Entrenamiento.html">Entrenamiento</a></li>
+                    <li><a href="Recuperacion.html">Recuperación</a></li>
+                    <li><a href="SobreMi.html">Sobre mí</a></li>
+                    <li><a href="Contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Redes</h4>
+                <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="#"><i class="fab fa-whatsapp fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Kinesis Sport. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+        
+</body>
+</html>
