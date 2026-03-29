@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso a Datos JDBC - Portfolio</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+<body>
+
+    <header>
+        <a href="../../index.html" class="site-logo">Sara García Albandea</a>
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../about.html">Sobre mí</a></li>
+                <li><a href="../index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section>
+            <div class="section-label">Proyecto</div>
+
+            <div class="project-detail">
+
+                <!-- Cabecera del proyecto -->
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+                    <div>
+                        <h2>Acceso a Datos con JDBC</h2>
+                        <p style="margin-top:0.4rem; font-size:0.85rem; color:#888;">2025 · Módulo Acceso a Datos · DAM 2º curso</p>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <span class="tag">Java</span>
+                        <span class="tag">JDBC</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Maven</span>
+                    </div>
+                </div>
+
+                <!-- Banner del proyecto -->
+                <div style="
+                    height: 200px;
+                    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                    border-radius: var(--radius-sm);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                    margin-bottom: 1.5rem;
+                ">
+                    <img src="../../images/Demo-jdbc.png" alt="Demo JDBC" style="
+                        width: 100%;
+                        height: 100%;
+                    ">
+                </div>
+
+                <!-- Descripción -->
+                <h3 style="margin-bottom:0.6rem;">Descripción</h3>
+                <p>
+                    Proyecto desarrollado durante el módulo de <strong>Acceso a Datos</strong> del ciclo de DAM.
+                    Muestra la evolución desde una conexión directa y básica a una base de datos PostgreSQL
+                    hasta una aplicación estructurada con arquitectura limpia en capas.
+                </p>
+                <p style="margin-top:0.75rem;">
+                    Contiene dos subproyectos diferenciados: un CRUD mínimo con un único DAO
+                    (<code>jdbc-basico</code>), y una versión refactorizada con separación de
+                    responsabilidades entre modelo, repositorio, servicio y clase de entrada
+                    (<code>arquitectura-capas</code>).
+                </p>
+
+                <!-- Retos -->
+                <h3 style="margin-top:1.5rem; margin-bottom:0.6rem;">Retos y aprendizajes</h3>
+                <p>
+                    El mayor aprendizaje fue comprender la conexión real entre Java y una base de
+                    datos relacional sin la abstracción de un ORM: gestión manual del
+                    <code>Connection</code>, <code>PreparedStatement</code> y <code>ResultSet</code>,
+                    y el ciclo de vida de los recursos.
+                </p>
+                <p style="margin-top:0.75rem;">
+                    La segunda fase supuso un salto conceptual importante: diseñar una arquitectura
+                    desacoplada donde cada capa tiene una única responsabilidad y se comunica a través
+                    de interfaces, aplicando inyección de dependencias sin frameworks externos.
+                </p>
+
+                <!-- Enlace -->
+                <div style="margin-top:2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                    <a href="https://github.com/SaraGAlb/acceso-datos-jdbc" target="_blank" class="button button--outline">Ver en GitHub →</a>
+                    <a href="../index.html" class="button button--outline">&larr; Volver a proyectos</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Sara García Albandea</p>
+        <nav class="footer-links">
+            <a href="https://github.com/SaraGAlb">GitHub</a>
+            <a href="https://es.linkedin.com/in/sara-garc%C3%ADa-albandea-650a46100">LinkedIn</a>
+            <a href="../../about.html">Contacto</a>
+        </nav>
+    </footer>
+
+    <script src="../../js/main.js"></script>
+</body>
+</html>

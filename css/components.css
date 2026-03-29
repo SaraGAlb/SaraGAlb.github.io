@@ -142,6 +142,12 @@
     transform: translateX(2px);
 }
 
+/* ==== SKILL-ITEM COMO ENLACE (proyectos) */
+a.skill-item {
+    text-decoration: none;
+    display: block;
+}
+
 /* ==== CARD DE PROYECTO INDIVIDUAL ==== */
 .project-detail {
     background: var(--color-white);
