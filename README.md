@@ -45,6 +45,6 @@ Para evitar problemas con rutas relativas se recomienda usar un servidor local, 
 
 ## Autor
 
-**Tu Nombre**
+sara García Albandea
 2º DAM — [DigitechFP]
 [sg.albandea@gmail.com] · [github.com/SaraGAlb]
